@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Work Anniversary Calculator | WorkAnniv</title>
+<meta name="description" content="Calculate years of service from any start date, countdown to 5/10/15/20-year milestones, and track team anniversaries on a shared board. Free tool.">
+<link rel="canonical" href="https://workanniv.fixoraa.tech/">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Work Anniversary Calculator | WorkAnniv">
+<meta property="og:description" content="Calculate years of service from any start date, countdown to 5/10/15/20-year milestones, and track team anniversaries on a shared board. Free tool.">
+<meta property="og:url" content="https://workanniv.fixoraa.tech/">
+<meta property="og:type" content="website">
+<script defer src="https://t.fixoraa.tech/track.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Asap:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "WorkAnniv",
+      "url": "https://workanniv.fixoraa.tech",
+      "applicationCategory": "Date & Time",
+      "operatingSystem": "Web",
+      "description": "Calculate years of service from any start date, countdown to 5/10/15/20-year milestones, and track team anniversaries on a shared board. Free tool.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How are years of service calculated?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Subtract the start year from the current year, then subtract one more if this year's anniversary date hasn't occurred yet. The result is floored at zero, so future start dates show 0 rather than a negative number."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does my tenure include the months before my first full year?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The calculator shows completed years only \u2014 someone 10 months into a job shows 0 years of service until the first anniversary date arrives. Many companies track months separately for probation and benefits; this tool focuses on the anniversary milestones."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What counts as my start date?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Almost always your official hire date \u2014 the day your employment began, not the offer date or interview date. If you were rehired after a break, most companies restart the clock; check your HR policy for the exact definition they use."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the standard work anniversary milestones?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The widely recognized milestones are 1, 5, 10, 15, 20, 25, and 30 years. The 5- and 10-year marks typically trigger the first meaningful recognition, while 20+ years are rare enough to warrant company-wide celebration."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How should a manager celebrate a team member's milestone?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Match the gesture to the milestone and the person: a sincere public acknowledgment for early years, extra time off or an experience gift at 5\u201310 years, and significant recognition \u2014 awards, trips, sabbaticals \u2014 at 15+ years. Always include specifics about their actual contributions."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why track the whole team's anniversaries on one board?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Because memory doesn't scale. Past a handful of people, start dates blur together and milestones get missed. A shared board sorted by upcoming anniversary ensures every milestone gets an owner, a plan, and a celebration \u2014 including for remote teammates."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+
+:root{
+  --bg:#F0F4F2; --surface:#FFFFFF; --accent:#14532D; --accent-ink:#FFFFFF;
+  --ink:#292524; --muted:#5A6478; --line:#D4E0D9;
+  --display:'Asap',serif; --body:'Inter',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--body);background:var(--bg);color:var(--ink);line-height:1.6;font-size:16px}
+.fx-container{max-width:72rem;margin:0 auto;padding-left:1rem;padding-right:1rem}
+@media(min-width:640px){.fx-container{padding-left:1.5rem;padding-right:1.5rem}}
+/* ad utilities (for the verbatim ad snippets) */
+.no-print{}
+.mx-auto{margin-left:auto;margin-right:auto}.max-w-6xl{max-width:72rem}
+.px-4{padding-left:1rem;padding-right:1rem}.pt-4{padding-top:1rem}.pb-4{padding-bottom:1rem}
+@media(min-width:640px){.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:scale-100{transform:scale(1)}}
+.text-center{text-align:center}.block{display:block}
+.text-\[10px\]{font-size:10px}.tracking-\[0\.18em\]{letter-spacing:.18em}.uppercase{text-transform:uppercase}
+.text-slate-400{color:#94a3b8}.mb-1\.5{margin-bottom:.375rem}
+.flex{display:flex}.justify-center{justify-content:center}.overflow-hidden{overflow:hidden}
+.origin-top{transform-origin:top}.scale-\[0\.44\]{transform:scale(.44)}.shrink-0{flex-shrink:0}
+/* header */
+.fx-header{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50}
+.fx-header-in{display:flex;align-items:center;gap:.9rem;padding:.8rem 0;flex-wrap:wrap}
+.fx-logo{display:flex;align-items:center;gap:.65rem;text-decoration:none;color:var(--ink)}
+.fx-logo-tile{width:44px;height:44px;border-radius:14px;background:var(--accent);color:var(--accent-ink);
+  display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;flex-shrink:0;
+  box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.fx-brand{font-family:var(--display);font-size:1.45rem;font-weight:700;letter-spacing:-.01em;line-height:1.1}
+.fx-nav{margin-left:auto;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.fx-btn{display:inline-block;padding:.55rem 1.1rem;border-radius:999px;text-decoration:none;font-weight:600;font-size:.92rem;
+  border:2px solid var(--accent);color:var(--accent);background:transparent;transition:all .18s ease;min-height:44px;line-height:1.5}
+.fx-btn:hover{background:var(--accent);color:var(--accent-ink)}
+.fx-btn.solid{background:var(--accent);color:var(--accent-ink)}
+.fx-btn.solid:hover{filter:brightness(.94)}
+.fx-badge{display:inline-flex;align-items:center;gap:.35rem;font-size:.78rem;font-weight:700;letter-spacing:.04em;
+  text-transform:uppercase;color:var(--accent);border:1.5px dashed var(--accent);border-radius:999px;padding:.3rem .8rem;white-space:nowrap}
+/* tool section */
+.tool-sec{padding:2.2rem 0 1rem}
+/* article */
+.article-sec{padding:2.5rem 0;max-width:46rem;margin:0 auto}
+.article-sec h2{font-family:var(--display);font-size:1.55rem;margin:2rem 0 .8rem;line-height:1.25;letter-spacing:-.01em}
+.article-sec h3{font-size:1.15rem;margin:1.5rem 0 .6rem}
+.article-sec p,.article-sec li{margin-bottom:.85rem;color:var(--ink)}
+.article-sec ul,.article-sec ol{padding-left:1.4rem;margin-bottom:1rem}
+.article-sec table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.95rem}
+.article-sec th,.article-sec td{border:1px solid var(--line);padding:.55rem .7rem;text-align:left}
+.article-sec th{background:var(--surface);font-weight:700}
+/* faq */
+.faq-sec{padding:1rem 0 3rem;max-width:46rem;margin:0 auto}
+.faq-sec h2{font-family:var(--display);font-size:1.55rem;margin-bottom:1.2rem}
+.faq-sec details{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-bottom:.7rem;overflow:hidden}
+.faq-sec summary{padding:1rem 1.2rem;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:1rem;min-height:44px}
+.faq-sec summary::-webkit-details-marker{display:none}
+.faq-sec summary::after{content:'+';font-size:1.4rem;color:var(--accent);flex-shrink:0}
+.faq-sec details[open] summary::after{content:'\2013'}
+.faq-sec details p{padding:0 1.2rem 1.1rem;color:var(--muted)}
+/* footer */
+.fx-footer{background:var(--surface);border-top:1px solid var(--line);padding:2.2rem 0;margin-top:1rem}
+.fx-footer .fx-brand{font-size:1.2rem}
+.fx-footer p{color:var(--muted);font-size:.95rem;max-width:44rem;margin:.5rem 0}
+.fx-footer nav{display:flex;gap:1.2rem;margin:1rem 0;flex-wrap:wrap}
+.fx-footer nav a{color:var(--accent);font-weight:600;text-decoration:none}
+.fx-footer nav a:hover{text-decoration:underline}
+.fx-credit{font-size:.9rem;color:var(--muted)}
+.fx-credit a{color:var(--accent);font-weight:700;text-decoration:none}
+@media(max-width:640px){.fx-brand{font-size:1.2rem}.tool-sec{padding:1.4rem 0 .6rem}}
+@media print{.no-print{display:none!important}}
+
+.wa-wrap{font-family:'Asap',Inter,system-ui,sans-serif;background:#F0F4F2;color:#292524;padding:56px 20px 80px;}
+.wa-hero{max-width:900px;margin:0 auto 34px;text-align:center;}
+.wa-logo{width:72px;height:72px;margin:0 auto 16px;border-radius:20px;background:linear-gradient(135deg,#14532D,#2e7d4e);font-size:36px;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 28px rgba(20,83,45,.25);}
+.wa-hero h1{font-size:clamp(30px,4.6vw,48px);line-height:1.08;margin:0 0 12px;font-weight:800;letter-spacing:-.02em;}
+.wa-tag{font-size:17px;color:#5A6478;margin:0;max-width:620px;margin-left:auto;margin-right:auto;line-height:1.6;}
+.wa-grid{max-width:1080px;margin:0 auto;display:grid;gap:22px;}
+.wa-tenure{background:#FFFFFF;border:1px solid #D4E0D9;border-radius:24px;padding:36px 30px;box-shadow:0 16px 40px rgba(20,83,45,.08);display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;}
+.wa-tenure h2{font-size:21px;margin:0 0 14px;font-weight:800;}
+.wa-field{margin-bottom:16px;}
+.wa-field label{display:block;font-weight:700;font-size:13px;color:#5A6478;margin-bottom:6px;}
+.wa-field input{width:100%;box-sizing:border-box;padding:12px;font-size:16px;border:2px solid #D4E0D9;border-radius:12px;font-family:inherit;color:#292524;background:#F0F4F2;}
+.wa-field input:focus{outline:none;border-color:#14532D;background:#fff;}
+.wa-btn{padding:14px 26px;border:none;border-radius:14px;background:#14532D;color:#fff;font-family:inherit;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 10px 24px rgba(20,83,45,.3);}
+.wa-btn:hover{background:#0d3a1f;}
+.wa-bignum{text-align:center;background:linear-gradient(135deg,#14532D,#2f7a4c);border-radius:20px;padding:34px 20px;color:#fff;}
+.wa-bignum .wa-n{font-size:clamp(56px,8vw,92px);font-weight:800;line-height:1;}
+.wa-bignum .wa-l{font-size:16px;opacity:.9;margin-top:6px;}
+.wa-cards{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+.wa-card{background:#FFFFFF;border:1px solid #D4E0D9;border-radius:22px;padding:28px;box-shadow:0 10px 30px rgba(20,83,45,.06);}
+.wa-card h2{font-size:20px;margin:0 0 12px;font-weight:800;}
+.wa-card p{line-height:1.65;margin:0 0 10px;}
+.wa-mile{font-size:30px;font-weight:800;color:#14532D;}
+.wa-ideas{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:8px;}
+.wa-ideas li{background:#F0F4F2;border:1px solid #D4E0D9;border-radius:12px;padding:10px 14px;font-size:14.5px;line-height:1.55;}
+.wa-brow{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 16px;}
+.wa-brow input{flex:1;min-width:120px;box-sizing:border-box;padding:11px;font-size:15px;border:2px solid #D4E0D9;border-radius:12px;font-family:inherit;color:#292524;}
+.wa-brow input:focus{outline:none;border-color:#14532D;}
+.wa-brow button{padding:11px 18px;border:none;border-radius:12px;background:#14532D;color:#fff;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;}
+.wa-list{list-style:none;margin:0;padding:0;display:grid;gap:8px;}
+.wa-list li{display:flex;justify-content:space-between;gap:10px;background:#F0F4F2;border:1px solid #D4E0D9;border-radius:12px;padding:10px 14px;font-size:14.5px;align-items:center;}
+.wa-list li strong{color:#14532D;}
+.wa-list .wa-del{border:none;background:none;color:#b0492f;font-size:16px;cursor:pointer;}
+.wa-empty{color:#5A6478;font-size:14.5px;}
+@media (max-width:760px){.wa-tenure{grid-template-columns:1fr;}.wa-cards{grid-template-columns:1fr;}.wa-wrap{padding:40px 14px 60px;}}
+</style>
+</head>
+<body>
+<header class="fx-header">
+  <div class="fx-container fx-header-in">
+    <a class="fx-logo" href="https://fixoraa.tech" aria-label="WorkAnniv home">
+      <span class="fx-logo-tile" aria-hidden="true">🏢</span>
+      <span class="fx-brand">WorkAnniv</span>
+    </a>
+    <nav class="fx-nav" aria-label="Site">
+      <a class="fx-btn" href="https://fixoraa.tech">Home</a>
+      <a class="fx-btn solid" href="https://fixoraa.tech">More Tools</a>
+      <span class="fx-badge" aria-label="Free forever">&#8734; Unlimited Free Usage</span>
+    </nav>
+  </div>
+</header>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pt-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <div class="origin-top scale-[0.44] sm:scale-100 shrink-0">
+        <script>
+          atOptions = { 'key' : '4e68ac77881c17fe128a46565d9a4e8c', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+        </script>
+        <script src="https://www.highrevenueformat.com/4e68ac77881c17fe128a46565d9a4e8c/invoke.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+<main class="fx-container">
+  <section class="tool-sec tpl-blueprint" aria-label="WorkAnniv tool">
+<section class="wa-wrap">
+<div class="wa-hero">
+<div class="wa-logo" aria-hidden="true">🏢</div>
+<h1>Work Anniversary Calculator</h1>
+<p class="wa-tag">Years of service, milestone countdowns, and the whole team's anniversaries — in one place.</p>
+</div>
+<div class="wa-grid">
+<div class="wa-tenure">
+<div>
+<h2>Your tenure</h2>
+<div class="wa-field"><label for="wa-start">Your start date</label><input id="wa-start" type="date" value="2020-03-15"></div>
+<button type="button" class="wa-btn" id="wa-calc">Calculate my tenure</button>
+</div>
+<div class="wa-bignum"><div class="wa-n" id="wa-years">–</div><div class="wa-l" id="wa-years-lbl">years of service</div></div>
+</div>
+<div class="wa-cards">
+<div class="wa-card">
+<h2>Next milestone</h2>
+<p class="wa-mile" id="wa-mile">–</p>
+<p id="wa-miletxt">Enter your start date to see your next big anniversary.</p>
+<ul class="wa-ideas" id="wa-ideas"></ul>
+</div>
+<div class="wa-card">
+<h2>Team anniversary board</h2>
+<div class="wa-brow"><input id="wa-bname" type="text" placeholder="Name"><input id="wa-bdate" type="date" aria-label="Start date"><button type="button" id="wa-badd">Add</button></div>
+<ul class="wa-list" id="wa-board"></ul>
+<p class="wa-empty" id="wa-bempty">Nobody on the board yet — add your team above.</p>
+</div>
+</div>
+<div class="wa-card">
+<h2>Tenure leaderboard</h2>
+<ul class="wa-list" id="wa-lead"></ul>
+<p class="wa-empty" id="wa-lempty">The leaderboard fills in as you add teammates to the board.</p>
+</div>
+</div>
+</section>
+  </section>
+  <article class="article-sec" aria-label="Guide">
+<h2>Why Work Anniversaries Matter More Than You Think</h2><p>Every year an employee stays is a year of compounding value: institutional knowledge, trusted relationships, and judgment that no onboarding program can replicate. Yet most companies let anniversaries pass with a generic email — or forget them entirely. Research on employee recognition consistently shows that people who feel genuinely appreciated are far more likely to stay, and tenure milestones are the most natural recognition moments a company has. A work anniversary calculator does more than count years; it makes sure the moment never slips by unnoticed.</p><p>For the individual, knowing your exact years of service has practical uses too. Resumes, LinkedIn profiles, pension vesting schedules, and sabbatical eligibility all run on tenure math — and the math has a subtle trap. Someone who started on March 15, 2020 has not completed six years of service on March 14, 2026; the anniversary completes on the date itself. The calculator above applies the standard rule: full years elapsed, minus one if this year's anniversary date hasn't arrived yet, floored at zero.</p><h2>How Years of Service Are Calculated</h2><p>The formula is deceptively simple. Take the current year minus the start year, then check whether the month-and-day of today has reached the month-and-day of the start date. If not, subtract one. Compare 2026-10-21 against a start of 2020-03-15: the raw difference is 6 years, and since October 21 is past March 15, the anniversary has occurred — 6 years of service. Against a start of 2026-01-01, the raw difference is 0, so the answer is 0 even though ten months have passed; the first anniversary hasn't arrived.</p><p>Edge cases worth knowing: leap-day starters (February 29) usually celebrate on February 28 or March 1 in non-leap years, depending on company policy — the calculator treats the date arithmetically. And tenure almost always counts from the hire date, not the offer date or the first day of orientation; if your company defines it differently, use their date as the input.</p><h3>Milestone reference</h3><table><thead><tr><th>Milestone</th><th>What it signals</th><th>Recognition idea</th></tr></thead><tbody><tr><td>1 year</td><td>Survived onboarding; real contributor</td><td>Handwritten note + public shout-out</td></tr><tr><td>5 years</td><td>Deep institutional knowledge</td><td>Extra day off + team lunch</td></tr><tr><td>10 years</td><td>A decade of loyalty</td><td>Experience gift + colleague video montage</td></tr><tr><td>15 years</td><td>Organizational memory keeper</td><td>Sabbatical option or charitable donation</td></tr><tr><td>20 years</td><td>Career-defining tenure</td><td>Legacy award at a company event</td></tr></tbody></table><h2>The Psychology of Milestone Recognition</h2><p>Not all recognition is equal. Studies of workplace motivation find that recognition tied to specific contributions and delivered publicly outperforms generic praise, and milestone anniversaries are the ideal vehicle: they are predictable, so managers can prepare; they are personal, so the recognition feels earned; and they are public, so the whole team sees loyalty being valued. The celebration ideas above scale with the milestone because the gesture should match the achievement — a 1-year note and a 20-year trip are different currencies for different debts of gratitude.</p><p>The most common failure is treating recognition as an HR process rather than a human moment. A templated certificate handed over in a hallway reads as obligation; the same certificate presented at a team lunch with two sentences about what the person actually contributed reads as honor. The difference costs nothing. Managers: put every direct report's anniversary in your calendar with a two-week reminder. That single habit outperforms most engagement programs.</p><h2>Building a Team Anniversary Board</h2><p>The board above solves the coordination problem: in a team of any size, nobody can track everyone's start date from memory. Add each teammate once, and the board sorts itself by upcoming anniversary, showing how many days remain and which anniversary number is approaching. That "year 5" or "year 10" flag is the important part — it tells you which anniversaries deserve more than a card.</p><ul><li><strong>Assign an owner:</strong> one person per upcoming milestone, responsible for the plan — not a committee, an owner.</li><li><strong>Match the gesture to the person:</strong> public celebrations thrill extroverts and mortify introverts; ask, don't assume.</li><li><strong>Include remote teammates fully:</strong> ship the gift, schedule the call across time zones, and never let distance shrink the recognition.</li><li><strong>Record it:</strong> a shared doc of past celebrations prevents repeats and builds tradition.</li></ul><h2>The Tenure Leaderboard: Fun With a Purpose</h2><p>Ranking the team by years of service looks like a game, and partly it is — but it serves a serious purpose. Long tenure is social proof that the team is worth staying on, and new hires seeing a leaderboard with 8- and 12-year veterans learn something no onboarding deck can teach: people stay here because it's good. It also surfaces your flight risks in reverse: the veterans nearing round-number milestones deserve proactive recognition before a recruiter's call arrives.</p><p>Use the leaderboard kindly. Tenure is not a performance ranking, and short-tenured teammates bring fresh perspective the veterans need. Frame it as a celebration of loyalty, never as a hierarchy of worth — and make sure new joiners see their own first anniversary approaching on the board, so they feel the tradition includes them from day one.</p><h2>Tenure, Benefits, and Career Planning</h2><p>Years of service quietly govern a surprising amount of working life. Many employers tie extra vacation days to tenure bands — an additional week at 5 years is common. Pension and 401(k) vesting schedules often cliff at 3 years or grade over 5. Sabbatical programs typically unlock at 7 or 10 years. Severance formulas multiply weeks of pay by years of service. Knowing your exact number, and the date it ticks over, lets you time negotiations and life decisions: that job offer in month 34 of a 36-month vesting cliff is worth less than it looks.</p><p>For job seekers, tenure math cuts both ways. Long tenure signals loyalty and depth; very long tenure in one role can raise questions about growth, which is why internal moves matter — each new role resets the growth clock while the tenure clock keeps running. Short stints need honest framing, not apology: contract work, layoffs, and career pivots are normal, and a clear story beats a defensive one every time.</p><h2>Anniversary Traditions Around the World</h2><p>How tenure gets celebrated says a lot about a workplace culture. In Japan, long service has historically been honored with formal ceremonies and company-wide recognition, reflecting a tradition of lifetime employment — though that tradition is evolving with the modern job market. German companies often mark 10-, 25-, and 40-year milestones (the famous "Dienstjubilaeum") with certificates, bonuses, and sometimes an extra month's salary. In the United States, the 5-year mark is the most commonly celebrated, with many tech companies adding equity refreshers or sabbaticals at 5 or 10 years.</p><p>Startups have invented their own rituals: the "workiversary" shout-out in Slack, the custom gift tied to the person's actual interests, the team offsite funded for a 5-year veteran. The best traditions share three traits regardless of country: they are <strong>predictable</strong> (everyone knows milestones get marked), <strong>personal</strong> (the gift reflects the person, not a catalog), and <strong>visible</strong> (the celebration teaches the whole team that loyalty is valued here).</p><p>If your company has no tradition, start one. Propose a simple policy: every anniversary gets a public acknowledgment, 5-year marks get a team lunch, and 10-year marks get something memorable. Write it down, put the dates on the shared board above, and assign owners. Traditions don't require budget; they require someone who cares enough to begin.</p><h2>When Tenure Isn't the Whole Story</h2><p>A word of balance: celebrating tenure should never become worshipping tenure. Long-serving employees deserve honor, but organizations also need new voices, and the leaderboard above should never be mistaken for a ranking of value. Some of the most important contributions come from people in their first year — the fresh questions, the outsider's perspective, the willingness to challenge "how we've always done it."</p><p>The healthiest teams celebrate two things side by side: loyalty and impact. Recognize the 10-year veteran's deep knowledge in the same meeting where you celebrate the newcomer's first shipped feature. Watch for the quiet trap where tenure becomes a proxy for authority — decisions should follow expertise and evidence, not seniority alone. And if you're the new person reading a leaderboard full of veterans, take it as the compliment it is: you joined a team worth staying on. Your own milestones are already on the board, counting down.</p><h2>Making Anniversaries a Culture, Not a Task</h2><p>The companies famous for retention don't have better anniversary software; they have leaders who treat tenure as sacred. The rituals are simple: the founder calls every 10-year employee personally. The team lunch is non-negotiable, not "if we have time." The story of what the person built gets told out loud, in front of people who need to hear it.</p><p>Start small: calculate your own tenure above, note your next milestone, and tell your manager what would make it meaningful to you. Then add your team to the board and never miss one again. Culture is just a set of repeated behaviors — and "we celebrate our people on time, every time" is one of the cheapest, highest-return behaviors a team can adopt.</p>
+  </article>
+  <section class="faq-sec" aria-label="Frequently asked questions">
+    <h2>Frequently asked questions</h2>
+<details><summary>How are years of service calculated?</summary><p>Subtract the start year from the current year, then subtract one more if this year's anniversary date hasn't occurred yet. The result is floored at zero, so future start dates show 0 rather than a negative number.</p></details>
+<details><summary>Does my tenure include the months before my first full year?</summary><p>The calculator shows completed years only — someone 10 months into a job shows 0 years of service until the first anniversary date arrives. Many companies track months separately for probation and benefits; this tool focuses on the anniversary milestones.</p></details>
+<details><summary>What counts as my start date?</summary><p>Almost always your official hire date — the day your employment began, not the offer date or interview date. If you were rehired after a break, most companies restart the clock; check your HR policy for the exact definition they use.</p></details>
+<details><summary>What are the standard work anniversary milestones?</summary><p>The widely recognized milestones are 1, 5, 10, 15, 20, 25, and 30 years. The 5- and 10-year marks typically trigger the first meaningful recognition, while 20+ years are rare enough to warrant company-wide celebration.</p></details>
+<details><summary>How should a manager celebrate a team member&#x27;s milestone?</summary><p>Match the gesture to the milestone and the person: a sincere public acknowledgment for early years, extra time off or an experience gift at 5–10 years, and significant recognition — awards, trips, sabbaticals — at 15+ years. Always include specifics about their actual contributions.</p></details>
+<details><summary>Why track the whole team&#x27;s anniversaries on one board?</summary><p>Because memory doesn't scale. Past a handful of people, start dates blur together and milestones get missed. A shared board sorted by upcoming anniversary ensures every milestone gets an owner, a plan, and a celebration — including for remote teammates.</p></details>
+  </section>
+</main>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pb-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:300px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <script>
+      (function(grnp){
+      var d = document,
+          s = d.createElement('script'),
+          l = d.currentScript || d.scripts[d.scripts.length - 1];
+      s.settings = grnp || {};
+      s.src = "\/\/peacefulbicycle.com\/bnXtVJsnd.GElF0oYVWQcY\/Qe\/mf9qu-ZqUtlZk\/PzTHcx1LM\/jWIZwkMTj\/U\/t-NrzmUnyOMsj\/AzydO\/Qx";
+      s.async = true;
+      s.referrerPolicy = 'no-referrer-when-downgrade';
+      l.parentNode.insertBefore(s, l);
+      })({})
+      </script>
+    </div>
+  </div>
+</div>
+<footer class="fx-footer">
+  <div class="fx-container">
+    <div class="fx-brand">WorkAnniv</div>
+    <p>WorkAnniv computes years of service from any start date, counts down to the next milestone, and keeps the whole team's anniversaries on one board.</p>
+    <nav aria-label="Footer">
+      <a href="https://fixoraa.tech">Home</a>
+      <a href="https://fixoraa.tech">More Tools</a>
+    </nav>
+    <p class="fx-credit">Made by <a href="https://fixoraa.tech">Fixoraa</a> &middot; Free forever, no signup.</p>
+  </div>
+</footer>
+<script>
+function yearsOfService(startISO,todayISO){function p(s){var a=String(s==null?'':s).split('-');return {y:parseInt(a[0],10),m:parseInt(a[1],10),d:parseInt(a[2],10)};}var s=p(startISO),t=p(todayISO);if(isNaN(s.y)||isNaN(t.y))return 0;var years=t.y-s.y;if((t.m*100+t.d)<(s.m*100+s.d))years-=1;if(years<0)years=0;return years;}
+if(typeof document!=='undefined'){document.addEventListener('DOMContentLoaded',function(){
+var startEl=document.getElementById('wa-start'),calcBtn=document.getElementById('wa-calc'),yearsEl=document.getElementById('wa-years'),yearsLbl=document.getElementById('wa-years-lbl'),mileEl=document.getElementById('wa-mile'),mileTxt=document.getElementById('wa-miletxt'),ideasEl=document.getElementById('wa-ideas');
+var bname=document.getElementById('wa-bname'),bdate=document.getElementById('wa-bdate'),badd=document.getElementById('wa-badd'),board=document.getElementById('wa-board'),bempty=document.getElementById('wa-bempty'),lead=document.getElementById('wa-lead'),lempty=document.getElementById('wa-lempty');
+function todayISO(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+var IDEAS={1:['A handwritten thank-you note from the team lead','A small gift card and a public shout-out'],5:['An extra day off and a team lunch in their honor','A personalized award or framed certificate'],10:['A weekend getaway voucher or experience gift','A video montage of messages from colleagues'],15:['A sabbatical option or premium experience','A donation to their favorite cause in their name'],20:['A legacy award presented at a company event','A fully paid trip for two'],25:['Founder-level recognition and equity bonus','A named award or mentorship role in their honor'],30:['Hall-of-fame induction at the annual gathering','A bespoke celebration planned with their family']};
+function milestoneInfo(years){var ms=[1,5,10,15,20,25,30];for(var i=0;i<ms.length;i++){if(ms[i]>years)return ms[i];}return 35;}
+function render(){if(!startEl||!yearsEl)return;var t=todayISO();var y=yearsOfService(startEl.value,t);yearsEl.textContent=String(y);if(yearsLbl)yearsLbl.textContent=y===1?'year of service':'years of service';
+var nm=milestoneInfo(y);
+if(mileEl)mileEl.textContent=nm+'-year';
+if(mileTxt){var parts=startEl.value.split('-');var ann=new Date(parseInt(parts[0],10)+nm,parseInt(parts[1],10)-1,parseInt(parts[2],10));var now=new Date();now.setHours(0,0,0,0);var days=Math.round((ann-now)/86400000);if(days<0)days=0;mileTxt.textContent=days+' days until your '+nm+'-year work anniversary ('+ann.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})+').';}
+if(ideasEl){ideasEl.innerHTML='';var ideas=IDEAS[nm]||['Celebrate in a way that fits the person','Mark it publicly and sincerely'];ideas.forEach(function(txt){var li=document.createElement('li');li.textContent=txt;ideasEl.appendChild(li);});}}
+var team=[];
+function daysUntil(dateStr){var p=dateStr.split('-');var now=new Date();var thisYear=now.getFullYear();var ann=new Date(thisYear,parseInt(p[1],10)-1,parseInt(p[2],10));now.setHours(0,0,0,0);if(ann<now)ann=new Date(thisYear+1,parseInt(p[1],10)-1,parseInt(p[2],10));return Math.round((ann-now)/86400000);}
+function renderBoard(){if(!board)return;board.innerHTML='';var t=todayISO();var sorted=team.slice().sort(function(a,b){return daysUntil(a.date)-daysUntil(b.date);});
+sorted.forEach(function(m){var li=document.createElement('li');var nm2=document.createElement('span');var yrs=yearsOfService(m.date,t)+1;nm2.innerHTML='';var strong=document.createElement('strong');strong.textContent=m.name;nm2.appendChild(strong);nm2.appendChild(document.createTextNode(' \u00b7 '+m.date+' \u00b7 '+daysUntil(m.date)+' days to year '+yrs));var del=document.createElement('button');del.type='button';del.className='wa-del';del.textContent='\u00d7';del.setAttribute('aria-label','Remove '+m.name);del.addEventListener('click',function(){team=team.filter(function(x){return x!==m;});renderBoard();renderLead();});li.appendChild(nm2);li.appendChild(del);board.appendChild(li);});
+if(bempty)bempty.style.display=sorted.length?'none':'block';}
+function renderLead(){if(!lead)return;lead.innerHTML='';var t=todayISO();var sorted=team.slice().sort(function(a,b){return yearsOfService(b.date,t)-yearsOfService(a.date,t);});
+sorted.forEach(function(m,i){var li=document.createElement('li');var yrs=yearsOfService(m.date,t);var sp=document.createElement('span');var strong=document.createElement('strong');strong.textContent='#'+(i+1)+' '+m.name;sp.appendChild(strong);sp.appendChild(document.createTextNode(' \u00b7 started '+m.date));var yrsEl2=document.createElement('strong');yrsEl2.textContent=yrs+(yrs===1?' yr':' yrs');li.appendChild(sp);li.appendChild(yrsEl2);lead.appendChild(li);});
+if(lempty)lempty.style.display=sorted.length?'none':'block';}
+if(badd)badd.addEventListener('click',function(){if(bname&&bdate&&bname.value.trim()&&bdate.value){team.push({name:bname.value.trim(),date:bdate.value});bname.value='';renderBoard();renderLead();}});
+if(calcBtn)calcBtn.addEventListener('click',render);
+if(startEl)startEl.addEventListener('change',render);
+render();renderBoard();renderLead();});}
+
+</script>
+</body>
+</html>
